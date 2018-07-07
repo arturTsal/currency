@@ -1,27 +1,38 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-class Form extends Component{
-    handleSelect = ()=>{
+import {mapDispatchToProps} from '../../actions/mapDispatchToProps';
 
-    };
+class Form extends Component{
+    componentDidMount(){
+        console.log('---', 'mounted');
+        this.props.dispatch(this.props.getRates.bind(this))
+    }
     render(){
         return(
             <Form>
                 <label>
                     Select currency:
-                    <select>
+                    <select  onLoad={console.log(this.props)} ref={select => this.selectedCurr = select}>
                         <option value="usd">USD</option>
                         <option selected value="uah">UAH</option>
                         <option value="eur">EUR</option>
                     </select>
                 </label>
-                <input type="text" placeholder="Enter amount"/>
-                <input type="text" readOnly/>
-                <input type="text" readOnly/>
-                <button>Calculate</button>
+                <input type="text" placeholder="Enter amount" ref={input => this.amountInput = input}/>
+                <input type="text" readOnly ref={input => this.firstCurrRate = input}/>
+                <input type="text" readOnly ref={input => this.secondCurrRate = input}/>
+                <button onClick={this.props.getRates.bind(this)}>Calculate</button>
             </Form>
         );
     }
 }
 
-export default connect({},{})(Form)
+const mapStateToProps = (state) => {
+   return {
+       usd: state.currencyValues.usd,
+       uah: state.currencyValues.uah,
+       eur: state.currencyValues.eur
+   }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Form)
