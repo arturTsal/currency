@@ -6,7 +6,7 @@ const initialState = {
         'eur': 30
     }
 };
-export const formReducer = (state = initialState, action) => {
+const formReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'CHANGE_CURRENCY':
             return {
@@ -21,3 +21,5 @@ export const formReducer = (state = initialState, action) => {
     }
     return state;
 };
+
+export default formReducer;

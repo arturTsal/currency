@@ -3,22 +3,19 @@ import {connect} from 'react-redux';
 import {mapDispatchToProps} from '../../actions/mapDispatchToProps';
 
 class Form extends Component{
-    componentDidMount(){
-        console.log('---', 'mounted');
-        this.props.dispatch(this.props.getRates.bind(this))
-    }
     render(){
+        console.log('---','rendered',this.props);
         return(
             <Form>
                 <label>
                     Select currency:
-                    <select  onLoad={console.log(this.props)} ref={select => this.selectedCurr = select}>
+                    <select ref={(select) => {this.selectedCurr = select}}>
                         <option value="usd">USD</option>
                         <option selected value="uah">UAH</option>
                         <option value="eur">EUR</option>
                     </select>
                 </label>
-                <input type="text" placeholder="Enter amount" ref={input => this.amountInput = input}/>
+                <input type="text" placeholder="Enter amount" ref={(input) => {this.amountInput = input}}/>
                 <input type="text" readOnly ref={input => this.firstCurrRate = input}/>
                 <input type="text" readOnly ref={input => this.secondCurrRate = input}/>
                 <button onClick={this.props.getRates.bind(this)}>Calculate</button>
